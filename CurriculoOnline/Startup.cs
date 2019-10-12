@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CurriculoOnline.Data;
+using Microsoft.EntityFrameworkCore;
+using CurriculoOnline.Services;
 
 namespace CurriculoOnline
 {
@@ -33,14 +36,22 @@ namespace CurriculoOnline
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddDbContext<CurriculoOnlineContext>(options =>
+            options.UseMySql(Configuration.GetConnectionString("CurriculoOnlineContext"), b =>
+            b.MigrationsAssembly("CurriculoOnline")));
+
+            services.AddScoped<SeedingService>();
+            services.AddScoped<EstadoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                seedingService.Seed();
             }
             else
             {
@@ -57,7 +68,7 @@ namespace CurriculoOnline
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Candidatos}/{action=Index}/{id?}");
             });
         }
     }
