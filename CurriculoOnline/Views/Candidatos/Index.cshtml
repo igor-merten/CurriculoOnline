@@ -9,3 +9,7 @@
 @*<button type="button" id="newBtn" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-xl" asp-controller="Candidatos"  asp-action="Create">Novo</button>*@
 
 @Html.Partial("~/Views/Candidatos/Create.cshtml")
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,6 +1,6 @@
 ﻿@model CurriculoOnline.Models.ViewModels.CandidatoFormViewModel;
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Criar novo candidato";
 }
 
 <script type="text/javascript">
@@ -57,79 +57,88 @@
             @*Conteudo*@
 
             <form id="CreateCandidato" asp-action="Create">
-
                 <div class="modal-header">
                     <h5 class="modal-title">Novo Candidato</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <div class="modal-body">
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label asp-for="Candidato.Nome" class="control-label">Nome</label>
-                            <input type="text" asp-for="Candidato.Nome" class="form-control" />
+                            <label asp-for="Nome" class="control-label">Nome</label>
+
+                            <input type="text" asp-for="Nome" class="form-control" />
+                            <span class="badge text-danger" asp-validation-for="Nome"></span>
                         </div>
                         <div class="form-group col-md-2">
-                            <label asp-for="Candidato.DataNascimento" class="control-label">Nascimento</label>
-                            <input type="date" asp-for="Candidato.DataNascimento" class="form-control" />
+                            <label asp-for="DataNascimento" class="control-label">Nascimento</label>
+                            <input type="date" asp-for="DataNascimento" class="form-control" />
+                            <span class="badge text-danger" asp-validation-for="DataNascimento"></span>
                         </div>
                         <div class="form-group col-md-2">
-                            <label asp-for="Candidato.Sexo" class="control-label">Sexo</label>
-                            <select asp-for="Candidato.Sexo" class="form-control">
+                            <label asp-for="Sexo" class="control-label">Sexo</label>
+                            <select asp-for="Sexo" class="form-control">
                                 <option value=""></option>
                                 <option value="M">Masculino</option>
                                 <option value="F">Feminino</option>
                             </select>
+                            <span class="badge text-danger" asp-validation-for="Sexo"></span>
                         </div>
                         <div class="form-group col-md-2">
-                            <label asp-for="Candidato.Nacionalidade" class="control-label">Nacionalidade</label>
-                            <input type="text" asp-for="Candidato.Nacionalidade" class="form-control" />
+                            <label asp-for="Nacionalidade" class="control-label">Nacionalidade</label>
+                            <input type="text" asp-for="Nacionalidade" class="form-control" />
+                            <span class="badge text-danger" asp-validation-for="Nacionalidade"></span>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label asp-for="Candidato.NomeMae" class="control-label">Nome da Mãe</label>
-                            <input type="text" asp-for="Candidato.Nome" class="form-control" />
+                            <label asp-for="NomeMae" class="control-label">Nome da Mãe</label>
+                            <input type="text" asp-for="NomeMae" class="form-control" />
+                            <span class="badge text-danger" asp-validation-for="NomeMae"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label asp-for="Candidato.NomePai" class="control-label">Nome do Pai</label>
-                            <input type="text" asp-for="Candidato.NomePai" class="form-control" />
+                            <label asp-for="NomePai" class="control-label">Nome do Pai</label>
+                            <input type="text" asp-for="NomePai" class="form-control" />
+                            <span class="badge text-danger" asp-validation-for="NomePai"></span>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label asp-for="Candidato.Endereco" class="control-label">Endereço</label>
-                            <input type="text" asp-for="Candidato.Endereco" class="form-control" />
+                            <label asp-for="Endereco" class="control-label">Endereço</label>
+                            <input type="text" asp-for="Endereco" class="form-control" />
+                            <span class="badge text-danger" asp-validation-for="Endereco"></span>
                         </div>
                         <div class="form-group col-md-2">
                             <label asp-for="NumEndereco" class="control-label">Número</label>
                             <input type="number" asp-for="NumEndereco" class="form-control" />
                         </div>
                         <div class="form-group col-md-1">
-                            <label asp-for="cidade.Estado.Id" class="control-label">Estado</label>
-                            <select id="estados" class="form-control">
+                            <label asp-for="IdEstado" class="control-label">Estado</label>
+                            <select asp-for="IdEstado" id="estados" class="form-control">
                                 <option value=""></option>
                             </select>
+                            <span class="badge text-danger" asp-validation-for="IdEstado"></span>
                         </div>
                         <div class="form-group col-md-3">
-                            <label asp-for="cidade.Id" class="control-label">Cidade</label>
-                            <select id="cidades" class="form-control">
+                            <label asp-for="IdCidade" class="control-label">Cidade</label>
+                            <select asp-for="IdCidade" id="cidades" class="form-control">
                                 <option value=""></option>
                             </select>
+                            <span class="badge text-danger" asp-validation-for="IdCidade"></span>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label asp-for="Candidato.Email" class="control-label">Email</label>
-                            <input type="email" asp-for="Candidato.Email" class="form-control" />
+                            <label asp-for="Email" class="control-label">Email</label>
+                            <input type="email" asp-for="Email" class="form-control" />
+                            <span class="badge text-danger" asp-validation-for="Email"></span>
                         </div>
                         <div class="form-group col-md-3">
-                            <label asp-for="Candidato.Telefone" class="control-label">Telefone</label>
-                            <input type="text" asp-for="Candidato.Telefone" class="form-control" />
+                            <label asp-for="Telefone" class="control-label">Telefone</label>
+                            <input type="text" asp-for="Telefone" class="form-control" />
                         </div>
                         <div class="form-group col-md-3">
-                            <label asp-for="Candidato.Celular" class="control-label">Celular</label>
-                            <input type="text" asp-for="Candidato.Celular" class="form-control" />
+                            <label asp-for="Celular" class="control-label">Celular</label>
+                            <input type="text" asp-for="Celular" class="form-control" />
                         </div>
                     </div>
 
@@ -147,6 +156,3 @@
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

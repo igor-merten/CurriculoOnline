@@ -32,8 +32,12 @@ namespace CurriculoOnline.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CandidatoFormViewModel viewModel)
+        public async Task<JsonResult> Create(CandidatoFormViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return Json("Deu ruim");
+            }
             return Json("Feshow");
         }
 
