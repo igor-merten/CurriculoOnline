@@ -5,3 +5,7 @@
 
 <h1>Index</h1>
 
+<button type="button" onclick="limpaFormulario()" id="newBtn" class="btn btn-success" data-toggle="modal" data-target=".modalCreateCandidato">Novo</button>
+@*<button type="button" id="newBtn" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-xl" asp-controller="Candidatos"  asp-action="Create">Novo</button>*@
+
+@Html.Partial("~/Views/Candidatos/Create.cshtml")

@@ -1,0 +1,152 @@
+﻿@model CurriculoOnline.Models.ViewModels.CandidatoFormViewModel;
+@{
+    ViewData["Title"] = "Create";
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        listaEstados();
+
+        $("#estados").change(function () {
+            listaCidades(this.value);
+        });
+
+    });
+
+    function listaEstados() {
+        var url = "@Url.Action("ListaEstados")";
+        $.get(url, function (data) {
+            $("#estados").html("<option value=''></option>");
+            $.each(data, function (i, item) {
+                $('#estados').append($('<option>', {
+                    value: item.id,
+                    text : item.uf
+                }));
+            });
+        });
+    }
+
+    function listaCidades(idEstado) {
+        var url = "@Url.Action("ListaCidades")";
+        $.get(url, { idEstado : idEstado }, function (data) {
+            $("#cidades").html("<option value=''></option>");
+            $.each(data, function (i, item) {
+                $('#cidades').append($('<option>', {
+                    value: item.id,
+                    text : item.nome
+                }));
+            });
+        });
+    }
+
+    function limpaFormulario() {
+        $("#CreateCandidato").each(function () {
+            this.reset();
+            $("#cidades").html("<option value=''></option>");
+        })
+    }
+
+</script>
+
+<div id="modal" class="modal fade modalCreateCandidato" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            @*Conteudo*@
+
+            <form id="CreateCandidato" asp-action="Create">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Novo Candidato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Candidato.Nome" class="control-label">Nome</label>
+                            <input type="text" asp-for="Candidato.Nome" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label asp-for="Candidato.DataNascimento" class="control-label">Nascimento</label>
+                            <input type="date" asp-for="Candidato.DataNascimento" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label asp-for="Candidato.Sexo" class="control-label">Sexo</label>
+                            <select asp-for="Candidato.Sexo" class="form-control">
+                                <option value=""></option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Feminino</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label asp-for="Candidato.Nacionalidade" class="control-label">Nacionalidade</label>
+                            <input type="text" asp-for="Candidato.Nacionalidade" class="form-control" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label asp-for="Candidato.NomeMae" class="control-label">Nome da Mãe</label>
+                            <input type="text" asp-for="Candidato.Nome" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Candidato.NomePai" class="control-label">Nome do Pai</label>
+                            <input type="text" asp-for="Candidato.NomePai" class="form-control" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label asp-for="Candidato.Endereco" class="control-label">Endereço</label>
+                            <input type="text" asp-for="Candidato.Endereco" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label asp-for="NumEndereco" class="control-label">Número</label>
+                            <input type="number" asp-for="NumEndereco" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="cidade.Estado.Id" class="control-label">Estado</label>
+                            <select id="estados" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label asp-for="cidade.Id" class="control-label">Cidade</label>
+                            <select id="cidades" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label asp-for="Candidato.Email" class="control-label">Email</label>
+                            <input type="email" asp-for="Candidato.Email" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label asp-for="Candidato.Telefone" class="control-label">Telefone</label>
+                            <input type="text" asp-for="Candidato.Telefone" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label asp-for="Candidato.Celular" class="control-label">Celular</label>
+                            <input type="text" asp-for="Candidato.Celular" class="form-control" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+
+                @*Fim Conteudo*@
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

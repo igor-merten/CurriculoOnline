@@ -43,6 +43,8 @@ namespace CurriculoOnline
 
             services.AddScoped<SeedingService>();
             services.AddScoped<EstadoService>();
+            services.AddScoped<CidadeService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
