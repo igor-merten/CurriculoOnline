@@ -21,9 +21,9 @@ namespace CurriculoOnline.Services
             return _context.Estado.Where(e => e.Id == id).SingleOrDefault();
         }
 
-        public async Task<List<Estado>> FindAllAsync()
+        public List<Estado> FindAllAsync()
         {
-            return await _context.Estado.OrderBy(e => e.Nome).ToListAsync();
+            return _context.Estado.OrderBy(e => e.Nome).ToList();
         }
 
         public List<Estado> FindAll()

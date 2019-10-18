@@ -1,15 +1,62 @@
-﻿
-@{
-    ViewData["Title"] = "Candidato";
-}
+﻿<script type="text/javascript" src="~/js/Candidatos/Index.js"></script>
+<script type="text/javascript" src="~/js/Candidatos/Create.js"></script>
+<script type="text/javascript" src="~/js/Candidatos/Delete.js"></script>
+<style type="text/css">
+    .width5 {
+        width: 5%;
+    }
 
-<h1>Index</h1>
+    .width10 {
+        width: 10%;
+    }
 
-<button type="button" onclick="limpaFormulario()" id="newBtn" class="btn btn-success" data-toggle="modal" data-target=".modalCreateCandidato">Novo</button>
-@*<button type="button" id="newBtn" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-xl" asp-controller="Candidatos"  asp-action="Create">Novo</button>*@
+    .width25 {
+        width: 25%;
+    }
+
+    .width20 {
+        width: 20%;
+    }
+
+    .width30 {
+        width: 30%;
+    }
+</style>
+
+<h4>Candidatos</h4>
+
+<div id="candidato-successbox" class="alert alert-success" style="display: none">
+    <span class="message"></span>
+    <button type="button" class="close" id="close-candidato-successbox">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<p>
+    <button type="button" onclick="limpaFormulario()" id="newBtn" class="btn btn-success" data-toggle="modal" data-target=".modal-create-candidato">Novo</button>
+</p>
+
+<div class="table-responsive">
+    <table id="candidatos" class="table table-hover table-striped table-bordered">
+        <thead>
+            <tr>
+                <th class="width30">Nome</th>
+                <th class="width30">E-mail</th>
+                <th class="width20 text-center">Data de Nascimento</th>
+                <th class="width20 text-center">Nacionalidade</th>
+                <th class="width10 text-center">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<nav aria-label="Navegação de página exemplo">
+    <ul id="paginacaoCandidato" class="pagination justify-content-center">
+    </ul>
+</nav>
+
 
 @Html.Partial("~/Views/Candidatos/Create.cshtml")
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+@Html.Partial("~/Views/Candidatos/Delete.cshtml")

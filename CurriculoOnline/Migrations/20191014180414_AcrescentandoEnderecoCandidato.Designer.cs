@@ -3,14 +3,16 @@ using System;
 using CurriculoOnline.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CurriculoOnline.Migrations
 {
     [DbContext(typeof(CurriculoOnlineContext))]
-    partial class CurriculoOnlineContextModelSnapshot : ModelSnapshot
+    [Migration("20191014180414_AcrescentandoEnderecoCandidato")]
+    partial class AcrescentandoEnderecoCandidato
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

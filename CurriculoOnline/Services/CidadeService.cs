@@ -17,17 +17,23 @@ namespace CurriculoOnline.Services
             _context = context;
         }
 
-        public async Task<List<Cidade>> FindByEstadoAsync(Estado estado)
-        {
-            if (estado != null)
-                return await _context.Cidade.Where(c => c.Estado == estado).OrderBy(c => c.Nome).DefaultIfEmpty().ToListAsync();
-            else
-                return null;
-        }
-        public List<Cidade> FindByIdEstadoAsync(int idEstado)
+        //public async Task<List<Cidade>> FindByEstadoAsync(Estado estado)
+        //{
+        //    if (estado != null)
+        //        return await _context.Cidade.Where(c => c.Estado == estado).OrderBy(c => c.Nome).DefaultIfEmpty().ToListAsync();
+        //    else
+        //        return null;
+        //}
+
+        public List<Cidade> FindByIdEstado(int idEstado)
         {
              return _context.Cidade.Where(c => c.Estado.Id == idEstado).OrderBy(c => c.Nome).DefaultIfEmpty().ToList();
         }
-        
+
+        public Cidade FindById(int id)
+        {
+            return _context.Cidade.Where(c => c.Id == id).FirstOrDefault();
+        }
+
     }
 }

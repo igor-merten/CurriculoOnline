@@ -1,5 +1,6 @@
 ﻿using CurriculoOnline.Data;
 using CurriculoOnline.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,20 @@ namespace CurriculoOnline.Services
             _context = context;
         }
 
-        public async void InserirAsync(Candidato candidato)
+        public List<Candidato> FindAll()
+        {
+            return _context.Candidato.OrderBy(c => c.Nome).ToList();
+        }
+
+        public Candidato FindById(int IdCandidato)
+        {
+            return _context.Candidato.Where(c => c.Id == IdCandidato).FirstOrDefault();
+        }
+
+        public void Insert(Candidato candidato)
         {
             _context.Add(candidato);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }
