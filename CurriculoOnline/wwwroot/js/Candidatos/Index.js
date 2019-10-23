@@ -9,6 +9,7 @@ $(document).ready(function () {
 })
 
 function listaCandidatos(num_pagina) {
+    $("#paginacaoCandidato").html("");
     var url = "/Candidatos/ListaCandidatos";
 
     paginacao = num_pagina == null ? { PaginaAtual: 0 } : { PaginaAtual: num_pagina };
@@ -23,8 +24,8 @@ function listaCandidatos(num_pagina) {
                     .append($("<td>").addClass("width20 text-center align-middle").html(item.dataNascimento))
                     .append($("<td>").addClass("width20 text-center align-middle").html(item.nacionalidade))
                     .append($("<td>").addClass("width10 text-center align-middle").html(
-                        "<a href='#/'><img src='/icon/edit.png' /></a> \
-                        <a href='#/' class='selecionaCandidato' value=" + item.id + " onclick='limpaFormulario()' data-toggle='modal' data-target='.modal-delete-candidato'><img src='/icon/delete.png' /></a>"
+                        "<a href='#/' class='selecionaCandidato btnEditCandidato' value=" + item.id + " onclick='limpaFormulario()' data-toggle='modal' data-target='.modal-create-candidato'><img src='/icon/edit.png' /></a> \
+                        <a href='#/' class='selecionaCandidato btnDeletaCandidato' value=" + item.id + " onclick='limpaFormulario()' data-toggle='modal' data-target='.modal-delete-candidato'><img src='/icon/delete.png' /></a>"
                     )))
         });
         paginar_candidatos(data.paginacao);
@@ -32,12 +33,16 @@ function listaCandidatos(num_pagina) {
         $(".selecionaCandidato").click(function () {
             var id = $(this).attr("value");
             var url = "/Candidatos/BuscaPorId";
+            var acaoDeletar = $(this).hasClass("btnDeletaCandidato");
 
             $.get({
                 url: url,
                 data: { idCandidato: id },
                 success: function (data) {
-                    confirmacaoDelete(data);
+                    if (acaoDeletar)
+                        confirmacaoDelete(data);
+                    else
+                        formEdit(data);
                 }
             });
         })

@@ -11,7 +11,7 @@ namespace CurriculoOnline.Data
 
         public Paginacao() {
             PaginaAtual = 0;
-            ItensPorPagina = 4;
+            ItensPorPagina = 10;
         }
         public Paginacao(int paginaAtual, int itensPorPagina)
         {

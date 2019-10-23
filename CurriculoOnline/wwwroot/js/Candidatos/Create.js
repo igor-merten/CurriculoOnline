@@ -19,27 +19,31 @@ function listaEstados() {
         $.each(data, function (i, item) {
             $('#estados').append($('<option>', {
                 value: item.id,
-                text: item.uf
-            }));
-        });
-    });
-}
-
-function listaCidades(idEstado) {
-    var url = "/Candidatos/ListaCidades";
-    $.get(url, { idEstado: idEstado }, function (data) {
-        $("#cidades").html("<option value=''></option>");
-        $.each(data, function (i, item) {
-            $('#cidades').append($('<option>', {
-                value: item.id,
                 text: item.nome
             }));
         });
     });
 }
 
+function listaCidades(idEstado, _callback) {
+    var url = "/Candidatos/ListaCidades";
+    $.get(url, { idEstado: idEstado }, function (data) {
+        $("#cidades").html("<option value=''></option>");
+        $.each(data, function (i, item) {
+            $('#cidades').append($('<option>', {
+                value: item.id,
+                text: item.nome,
+            }));
+        });
+        if (_callback)
+            _callback();
+    });
+   
+}
+
 function limpaFormulario() {
-    $(".alert").hide();
+    $(".alert").slideUp();
+    $("#FormCreateCandidato input[name='Id']").val("");
     $("#FormCreateCandidato").each(function () {
         this.reset();
         $("#cidades").html("<option value=''></option>");
@@ -77,15 +81,14 @@ function mostraAlertBoxCreate(mensagem) {
 
 function enviaFormulario() {
 
-    url = '/Candidatos/Create';
+    url = '/Candidatos/CreateOrEdit';
     var data = $('#FormCreateCandidato').serializeArray().reduce(function (obj, item) {
         obj[item.name] = item.value;
         return obj;
     }, {});
-    console.log(data);
+
     validaCampos(data);
     if ($(".checkValidation ul li").length > 0) {
-        console.log($(".checkValidation ul li").length);
         mostraAlertBoxCreate("Os seguintes campos são obrigatórios:");
         return false;
     }
@@ -98,10 +101,32 @@ function enviaFormulario() {
                 $('.modal-create-candidato').modal('hide');
                 $("#candidato-successbox .message").html(data.texto)
                 $("#candidato-successbox").slideDown();
+                listaCandidatos($(".page-item.active a").html() - 1); //index pagina selecionada
             } else {
-                console.log(0)
                 mostraAlertBoxCreate(data.texto);
             }
         }
     });
+}
+
+function formEdit(candidato) {
+
+    $("#FormCreateCandidato input[name='Id']").val(candidato.Id);
+    $("#FormCreateCandidato input[name='Nome']").val(candidato.Nome);
+    $("#FormCreateCandidato input[name='DataNascimento']").val(candidato.DataNascimento);
+    $("#FormCreateCandidato select[name='Sexo']").val(candidato.Sexo);
+    $("#FormCreateCandidato input[name='Nacionalidade']").val(candidato.Nacionalidade);
+    $("#FormCreateCandidato input[name='NomeMae']").val(candidato.NomeMae);
+    $("#FormCreateCandidato input[name='NomePai']").val(candidato.NomePai);
+    $("#FormCreateCandidato input[name='Endereco']").val(candidato.Endereco);
+    $("#FormCreateCandidato select[name='IdEstado']").val(candidato.IdEstado);
+
+    listaCidades(candidato.IdEstado, function () {
+        $("#FormCreateCandidato select[name='IdCidade']").val(candidato.IdCidade);
+    });
+
+    $("#FormCreateCandidato input[name='Email']").val(candidato.Email);
+    $("#FormCreateCandidato input[name='Telefone']").val(candidato.Telefone);
+    $("#FormCreateCandidato input[name='Celular']").val(candidato.Celular);
+
 }

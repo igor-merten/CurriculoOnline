@@ -33,7 +33,7 @@ namespace CurriculoOnline.Controllers
         }
 
         [HttpPost]
-        public JsonResult Create(CandidatoFormViewModel viewModel)
+        public JsonResult CreateOrEdit(CandidatoFormViewModel viewModel)
         {
             JsonResponse result = new JsonResponse();
 
@@ -51,18 +51,25 @@ namespace CurriculoOnline.Controllers
             Candidato candidato = new Candidato();
 
             candidato.Nome = viewModel.Nome;
-            candidato.DataNascimento = viewModel.DataNascimento.Date;
+            candidato.DataNascimento = viewModel.DataNascimento;
             candidato.Sexo = viewModel.Sexo;
             candidato.Nacionalidade = viewModel.Nacionalidade;
             candidato.NomeMae = viewModel.NomeMae;
             candidato.NomePai = viewModel.NomePai;
             candidato.Cidade = cidadeCandidato;
-            candidato.Endereco = viewModel.NumEndereco.HasValue ?
-                viewModel.Endereco + " " + viewModel.NumEndereco.Value.ToString() :
-                viewModel.Endereco;
+            candidato.Endereco = viewModel.Endereco;
             candidato.Telefone = viewModel.Telefone;
             candidato.Celular = viewModel.Celular;
             candidato.Email = viewModel.Email;
+
+            if (viewModel.Id.HasValue)
+            {
+                candidato.Id = viewModel.Id.Value;
+                var editaCandidato = _candidatoService.Edit(candidato);
+                if(!editaCandidato)
+                    return Json(new JsonResponse(false, "Impossível editar este candidato: Id não encontrado."));
+                return Json(new JsonResponse(true, "Candidato editado com sucesso!"));
+            }
 
             _candidatoService.Insert(candidato);
 
@@ -74,10 +81,10 @@ namespace CurriculoOnline.Controllers
         [HttpPost]
         public JsonResult Delete(int idCandidato)
         {
-            idCandidato = 1000;
             Candidato candidato = _candidatoService.FindById(idCandidato);
+            var deletaCandidato = _candidatoService.Delete(candidato);
 
-            if (candidato == null)
+            if (!deletaCandidato)
                 return Json(new JsonResponse(false, "Impossivel remover candidato: Id não encontrado."));
 
             return Json(new JsonResponse(true, "Candidato deletado com sucesso"));
@@ -94,8 +101,20 @@ namespace CurriculoOnline.Controllers
             Candidato candidatobd = _candidatoService.FindById(idCandidato);
 
             dynamic candidato = new ExpandoObject();
+
             candidato.Id = candidatobd.Id;
             candidato.Nome = candidatobd.Nome;
+            candidato.DataNascimento = candidatobd.DataNascimento.ToString("yyyy-MM-dd");
+            candidato.Sexo = candidatobd.Sexo;
+            candidato.Nacionalidade = candidatobd.Nacionalidade;
+            candidato.NomeMae = candidatobd.NomeMae;
+            candidato.NomePai = candidatobd.NomePai;
+            candidato.Endereco = candidatobd.Endereco;
+            candidato.Email = candidatobd.Email;
+            candidato.Celular = candidatobd.Celular;
+            candidato.Telefone = candidatobd.Telefone;
+            candidato.IdCidade = candidatobd.Cidade.Id;
+            candidato.IdEstado = candidatobd.Cidade.Estado.Id;
 
             return Json(candidato);
         }

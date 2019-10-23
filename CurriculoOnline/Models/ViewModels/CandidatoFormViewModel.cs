@@ -7,6 +7,8 @@ namespace CurriculoOnline.Models.ViewModels
     public class CandidatoFormViewModel
     {
 
+        public int? Id { get; set; }
+
         [Required(ErrorMessage = "Campo Nome é obrigatório!")]
         public string Nome { get; set; }
 
@@ -41,8 +43,6 @@ namespace CurriculoOnline.Models.ViewModels
 
         [Required(ErrorMessage = "Campo Estado é obrigatório!")]
         public int IdEstado { get; set; }
-
-        public int? NumEndereco { get; set; }
 
     }
 }

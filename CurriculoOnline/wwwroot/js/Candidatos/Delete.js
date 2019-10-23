@@ -16,6 +16,11 @@ $(document).ready(function () {
                 if (!data.sucesso) {
                     $("#delete-candidato-alertbox .message").html(data.texto);
                     $("#delete-candidato-alertbox").slideDown();
+                } else {
+                    $('.modal-delete-candidato').modal('hide');
+                    $("#candidato-successbox .message").html(data.texto)
+                    $("#candidato-successbox").slideDown();
+                    listaCandidatos();
                 }
             }
         });
