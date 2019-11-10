@@ -1,23 +1,22 @@
 ﻿
 $(document).ready(function () {
 
-    listaEstados();
-
+    listaEstados("#estados");
     $("#estados").change(function () {
-        listaCidades(this.value);
+        listaCidades("#cidades", this.value);
     });
 
     $("#FormCreateCandidato").submit(function () { enviaFormulario(this.value); return false; });
-    $("#close-create-alert-box").click(function () { $("#create-candidato-alertbox").slideUp(); });
+    $(".close-create-candidato-box").click(function () { $(".create-candidato-box").slideUp(); });
 
 });
 
-function listaEstados() {
+function listaEstados(id_campo) {
     var url = "/Candidatos/ListaEstados";
     $.get(url, function (data) {
-        $("#estados").html("<option value=''></option>");
+        $(id_campo).html("<option value=''></option>");
         $.each(data, function (i, item) {
-            $('#estados').append($('<option>', {
+            $(id_campo).append($('<option>', {
                 value: item.id,
                 text: item.nome
             }));
@@ -25,12 +24,12 @@ function listaEstados() {
     });
 }
 
-function listaCidades(idEstado, _callback) {
+function listaCidades(id_campo, idEstado, _callback) {
     var url = "/Candidatos/ListaCidades";
     $.get(url, { idEstado: idEstado }, function (data) {
-        $("#cidades").html("<option value=''></option>");
+        $(id_campo).html("<option value=''></option>");
         $.each(data, function (i, item) {
-            $('#cidades').append($('<option>', {
+            $(id_campo).append($('<option>', {
                 value: item.id,
                 text: item.nome,
             }));
@@ -38,11 +37,12 @@ function listaCidades(idEstado, _callback) {
         if (_callback)
             _callback();
     });
-   
 }
 
 function limpaFormulario() {
-    $(".alert").slideUp();
+    zeraExperiencias();
+
+    $(".alert").hide();
     $("#FormCreateCandidato input[name='Id']").val("");
     $("#FormCreateCandidato").each(function () {
         this.reset();
@@ -50,7 +50,7 @@ function limpaFormulario() {
     })
 }
 
-function validaCampos(data) {
+function verificaCampos(data) {
     $(".checkValidation ul").html("");
     if (data.Nome == "" || data.Nome == '' || data.Nome == null)
         $(".checkValidation ul").append("<li>Nome</li>");
@@ -80,6 +80,7 @@ function mostraAlertBoxCreate(mensagem) {
 }
 
 function enviaFormulario() {
+    $(".create-candidato-box").slideUp();
 
     url = '/Candidatos/CreateOrEdit';
     var data = $('#FormCreateCandidato').serializeArray().reduce(function (obj, item) {
@@ -87,11 +88,13 @@ function enviaFormulario() {
         return obj;
     }, {});
 
-    validaCampos(data);
+    verificaCampos(data);
     if ($(".checkValidation ul li").length > 0) {
         mostraAlertBoxCreate("Os seguintes campos são obrigatórios:");
         return false;
     }
+
+    data.experiencias = experiencias;
 
     $.post({
         url: url,
@@ -110,7 +113,6 @@ function enviaFormulario() {
 }
 
 function formEdit(candidato) {
-
     $("#FormCreateCandidato input[name='Id']").val(candidato.Id);
     $("#FormCreateCandidato input[name='Nome']").val(candidato.Nome);
     $("#FormCreateCandidato input[name='DataNascimento']").val(candidato.DataNascimento);
@@ -121,7 +123,7 @@ function formEdit(candidato) {
     $("#FormCreateCandidato input[name='Endereco']").val(candidato.Endereco);
     $("#FormCreateCandidato select[name='IdEstado']").val(candidato.IdEstado);
 
-    listaCidades(candidato.IdEstado, function () {
+    listaCidades("#cidades", candidato.IdEstado, function () {
         $("#FormCreateCandidato select[name='IdCidade']").val(candidato.IdCidade);
     });
 
@@ -129,4 +131,55 @@ function formEdit(candidato) {
     $("#FormCreateCandidato input[name='Telefone']").val(candidato.Telefone);
     $("#FormCreateCandidato input[name='Celular']").val(candidato.Celular);
 
+    listaExperienciasTela(candidato.Experiencias);
+
+}
+
+function zeraExperiencias() {
+    experiencias = [];
+    $("#experiencia #experienciasNovas").html("");
+    $("#experiencia #experienciasSalvas").html("");
+    $("#experiencia #experienciasNovas")
+        .append($("<tr>")
+            .append($("<td>").attr("colspan", "4").addClass("text-center").html("Nenhuma experiência cadastrada.")));
+}
+
+function listaExperienciasTela(experiencias) {
+    if (experiencias.length != 0)
+        $("#experiencia #experienciasNovas").html("");
+
+    $("#experiencia #experienciasSalvas").html("");
+    experiencias.forEach(function (item) {
+        $("#experiencia #experienciasSalvas")
+            .append($("<tr>").addClass("")
+                .append($("<td>").addClass("width25 align-middle").html(item.Profissao))
+                .append($("<td>").addClass("width30 align-middle").html(item.Empresa))
+                .append($("<td>").addClass("width15 text-center align-middle").html(item.Data))
+                .append($("<td>").addClass("width10 text-center align-middle").html(
+                    "\
+                    <a href='#/' class='selecionaExperiencia btnEditExperiencia' value=" + item.Id + " onclick='limpaFormularioExperiencia()' data-toggle='modal' data-target='.modal-adicionar-experiencia'> <img src='/icon/edit.png' /></a > \
+                    <a href='#/' class='selecionaExperiencia btnDeletaExperiencia' value=" + item.Id + " onclick='limpaFormularioExperiencia()' data-toggle='modal' data-target='.modal-delete-experiencia'><img src='/icon/delete.png' /></a>\
+                    "
+                )))
+    });
+
+    $(".selecionaExperiencia").click(function () {
+        var id = $(this).attr("value");
+        var url = "/Experiencia/BuscaPorId";
+        var acaoDeletar = $(this).hasClass("btnDeletaExperiencia");
+
+        $.get({
+            url: url,
+            data: { idCandidato: id },
+            success: function (data) {
+                //verifica qual funcao de AdicionarExperiencia irá chamar
+                if (acaoDeletar)
+                    confirmacaoDeleteExperiencia(data);
+                else
+                    formEditExperiencia(data);
+            }
+        });
+    });
+
+    mostrarNovasExperienciaTela(); //mostra as novas experiencias, caso tenha
 }

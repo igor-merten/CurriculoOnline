@@ -1,8 +1,4 @@
-﻿function confirmacaoDelete(candidato) {
-    $("#nomeDeletaCandidato").html(candidato.Nome);
-    $("#confirmarDelete").attr("value", candidato.Id);
-}
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $("#close-delete-candidato-alertbox").click(function () { $("#delete-candidato-alertbox").slideUp(); });
 
     $("#confirmarDelete").click(function () {
@@ -27,3 +23,8 @@ $(document).ready(function () {
 
     })
 })
+
+function confirmacaoDelete(candidato) {
+    $("#nomeDeletaCandidato").html(candidato.Nome);
+    $("#confirmarDelete").attr("value", candidato.Id);
+}

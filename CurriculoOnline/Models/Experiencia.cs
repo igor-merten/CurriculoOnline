@@ -8,7 +8,7 @@ namespace CurriculoOnline.Models
         public string Profissao { get; set; }
         public string Empresa { get; set; }
         public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
+        public DateTime? DataFim { get; set; }
         public string Detalhes { get; set; }
         public Cidade Cidade { get; set; }
         public Candidato Candidato { get; set; }

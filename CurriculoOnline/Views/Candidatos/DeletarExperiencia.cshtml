@@ -1,0 +1,31 @@
+﻿<div class="modal fade modal-delete-experiencia" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Deletar Experiência</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div id="delete-experiencia-alertbox" class="alert alert-danger slide" style="display: none">
+                    <button type="button" class="close" id="close-delete-experiencia-alertbox"><span aria-hidden="true">&times;</span></button>
+                    <span class="message"></span>
+                </div>
+
+                <div class="text-center">
+                    Deseja realmente deletar a experiência exercida como <span id="profissaoDeletaExperiencia" class="font-weight-bold"></span> 
+                    na empresa <span id="empresaDeletaExperiencia" class="font-weight-bold"></span>?
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger" id="confirmarDeleteExperiencia">Deletar</button>
+            </div>
+
+        </div>
+    </div>
+</div>

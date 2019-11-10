@@ -44,5 +44,7 @@ namespace CurriculoOnline.Models.ViewModels
         [Required(ErrorMessage = "Campo Estado é obrigatório!")]
         public int IdEstado { get; set; }
 
+        public List<ExperienciaFormViewModel> Experiencias { get; set; } = new List<ExperienciaFormViewModel>();
+
     }
 }

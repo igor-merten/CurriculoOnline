@@ -62,6 +62,22 @@ namespace CurriculoOnline.Controllers
             candidato.Celular = viewModel.Celular;
             candidato.Email = viewModel.Email;
 
+            foreach (var exp in viewModel.Experiencias)
+            {
+                Experiencia experiencia = new Experiencia();
+                experiencia.Candidato = candidato;
+                experiencia.Cidade = _cidadeService.FindById(exp.IdCidade);
+                if (experiencia.Cidade == null)
+                    return Json(new JsonResponse(false, "Cidade não encontrada."));
+                experiencia.DataFim = exp.DataFim;
+                experiencia.DataInicio = exp.DataInicio;
+                experiencia.Detalhes = exp.Detalhes;
+                experiencia.Empresa = exp.Empresa;
+                experiencia.Profissao = exp.Profissao;
+
+                candidato.Experiencias.Add(experiencia);
+            }
+
             if (viewModel.Id.HasValue)
             {
                 candidato.Id = viewModel.Id.Value;
@@ -87,7 +103,7 @@ namespace CurriculoOnline.Controllers
             if (!deletaCandidato)
                 return Json(new JsonResponse(false, "Impossivel remover candidato: Id não encontrado."));
 
-            return Json(new JsonResponse(true, "Candidato deletado com sucesso"));
+            return Json(new JsonResponse(true, "Candidato deletado com sucesso!"));
         }
 
         public JsonResult ListaCidades(int idEstado)
@@ -115,6 +131,28 @@ namespace CurriculoOnline.Controllers
             candidato.Telefone = candidatobd.Telefone;
             candidato.IdCidade = candidatobd.Cidade.Id;
             candidato.IdEstado = candidatobd.Cidade.Estado.Id;
+
+            var experiencias = new List<dynamic>();
+
+            foreach(var exp in candidatobd.Experiencias)
+            {
+                dynamic experiencia = new ExpandoObject();
+
+                experiencia.Cidade = exp.Cidade;
+                experiencia.DataFim = exp.DataFim;
+                experiencia.DataInicio = exp.DataInicio;
+                var datafim = exp.DataFim.HasValue ? exp.DataFim.Value.ToString("dd/MM/yyyy") : "Atualmente";
+                var data = exp.DataInicio.ToString("dd/MM/yyyy") + " - " + datafim;
+                experiencia.Data = data;
+                experiencia.Detalhes = exp.Detalhes;
+                experiencia.Empresa = exp.Empresa;
+                experiencia.Id = exp.Id;
+                experiencia.Profissao = exp.Profissao;
+
+                experiencias.Add(experiencia);
+            }
+
+            candidato.Experiencias = experiencias;
 
             return Json(candidato);
         }

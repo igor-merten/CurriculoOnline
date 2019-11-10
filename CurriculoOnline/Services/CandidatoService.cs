@@ -25,9 +25,16 @@ namespace CurriculoOnline.Services
         {
             return _context.Candidato
                 .Where(c => c.Id == IdCandidato)
+                .Include(e => e.Experiencias)
+                .ThenInclude(e => e.Cidade) //cidade da experiencia
                 .Include(c => c.Cidade)
-                .Include(e => e.Cidade.Estado)
+                .Include(c => c.Cidade.Estado)
                 .FirstOrDefault();
+        }
+
+        public Candidato LastCandidato()
+        {
+            return _context.Candidato.LastOrDefault();
         }
 
         public void Insert(Candidato candidato)

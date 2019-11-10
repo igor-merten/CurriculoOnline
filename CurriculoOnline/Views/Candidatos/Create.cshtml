@@ -1,101 +1,133 @@
-﻿            <div class="modal fade modal-create-candidato" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
+﻿<div class="modal fade modal-create-candidato" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
 
-                        <form id="FormCreateCandidato">
+            <form id="FormCreateCandidato">
 
-                            <div class="modal-header">
-                                <h5 class="modal-title">Novo Candidato</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <div class="modal-body">
-
-                                @*Caixa de mensagem*@
-
-                                <div id="create-candidato-alertbox" class="alert alert-danger" style="display: none">
-                                    <button type="button" class="close" id="close-create-alert-box"><span aria-hidden="true">&times;</span></button>
-                                    <span class="message"></span>
-                                    <div class="text-danger checkValidation"><ul></ul></div>
-                                </div>
-
-                                @*Conteudo*@
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label">Nome</label>
-                                        <input type="text" name="Nome" class="form-control" @*required*@ />
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="control-label">Nascimento</label>
-                                        <input type="date" name="DataNascimento" class="form-control" @*required*@ />
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="control-label">Sexo</label>
-                                        <select name="Sexo" class="form-control" @*required*@>
-                                            <option value=""></option>
-                                            <option value="M">Masculino</option>
-                                            <option value="F">Feminino</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="control-label">Nacionalidade</label>
-                                        <input type="text" name="Nacionalidade" class="form-control" @*required*@ />
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label">Nome da Mãe</label>
-                                        <input type="text" name="NomeMae" class="form-control" @*required*@ />
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label">Nome do Pai</label>
-                                        <input type="text" name="NomePai" class="form-control" @*required*@ />
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label">Endereço</label>
-                                        <input type="text" name="Endereco" class="form-control" @*required*@ />
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="control-label">Estado</label>
-                                        <select name="IdEstado" id="estados" class="form-control" @*required*@>
-                                            <option value=""></option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="control-label">Cidade</label>
-                                        <select name="IdCidade" id="cidades" class="form-control" @*required*@>
-                                            <option value=""></option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label">Email</label>
-                                        <input type="email" name="Email" class="form-control" @*required*@ />
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label class="control-label">Telefone</label>
-                                        <input type="text" name="Telefone" class="form-control" />
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label class="control-label">Celular</label>
-                                        <input type="text" name="Celular" class="form-control" />
-                                    </div>
-                                </div>
-
-                                @*Fim Conteudo*@
-
-                            </div>
-
-                            <div class="modal-footer">
-                                <input type="hidden" name="Id" />
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success">Salvar</button>
-                            </div>
-
-                        </form>
-                    </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">Informações do Candidato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
+
+                <div class="modal-body">
+
+                    @*Caixa de mensagem*@
+
+                    <div id="create-candidato-alertbox" class="alert alert-danger create-candidato-box" style="display: none">
+                        <button type="button" class="close close-create-candidato-box"><span aria-hidden="true">&times;</span></button>
+                        <span class="message"></span>
+                        <div class="text-danger checkValidation"><ul></ul></div>
+                    </div>
+
+                    <div id="create-candidato-successbox" class="alert alert-success create-candidato-box" style="display: none">
+                        <span class="message"></span>
+                        <button type="button" class="close close-create-candidato-box">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    @*Conteudo*@
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Nome</label>
+                            <input type="text" name="Nome" class="form-control" @*required*@ />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="control-label">Nascimento</label>
+                            <input type="date" name="DataNascimento" class="form-control" @*required*@ />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="control-label">Sexo</label>
+                            <select name="Sexo" class="form-control" @*required*@>
+                                <option value=""></option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Feminino</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="control-label">Nacionalidade</label>
+                            <input type="text" name="Nacionalidade" class="form-control" @*required*@ />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Nome da Mãe</label>
+                            <input type="text" name="NomeMae" class="form-control" @*required*@ />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Nome do Pai</label>
+                            <input type="text" name="NomePai" class="form-control" @*required*@ />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Endereço</label>
+                            <input type="text" name="Endereco" class="form-control" @*required*@ />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="control-label">Estado</label>
+                            <select name="IdEstado" id="estados" class="form-control" @*required*@>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Cidade</label>
+                            <select name="IdCidade" id="cidades" class="form-control" @*required*@>
+                                <option value=""></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Email</label>
+                            <input type="email" name="Email" class="form-control" @*required*@ />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Telefone</label>
+                            <input type="text" name="Telefone" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Celular</label>
+                            <input type="text" name="Celular" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <h6>Experiência Profissional</h6>
+                        <p>
+                            <button type="button" onclick="limpaFormularioExperiencia()" class="btn btn-success btn-sm" data-toggle="modal" data-target=".modal-adicionar-experiencia">Adicionar</button>
+                        </p>
+                        <table id="experiencia" class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="width35">Profissão</th>
+                                    <th class="width35">Empresa</th>
+                                    <th class="width20 text-center">Data</th>
+                                    <th class="width10 text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="experienciasSalvas">
+                            </tbody>
+                            <tbody id="experienciasNovas">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @*Fim Conteudo*@
+
+                </div>
+
+                <div class="modal-footer">
+                    <input type="hidden" name="Id" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@Html.Partial("~/Views/Candidatos/AdicionarExperiencia.cshtml")
+@Html.Partial("~/Views/Candidatos/DeletarExperiencia.cshtml")

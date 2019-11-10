@@ -1,6 +1,9 @@
 ﻿<script type="text/javascript" src="~/js/Candidatos/Index.js"></script>
 <script type="text/javascript" src="~/js/Candidatos/Create.js"></script>
 <script type="text/javascript" src="~/js/Candidatos/Delete.js"></script>
+<script type="text/javascript" src="~/js/Candidatos/AdicionarExperiencia.js"></script>
+<script type="text/javascript" src="~/js/Candidatos/DeletarExperiencia.js"></script>
+
 <style type="text/css">
     .width5 {
         width: 5%;
@@ -8,6 +11,10 @@
 
     .width10 {
         width: 10%;
+    }
+
+    .width15 {
+        width: 15%;
     }
 
     .width25 {
@@ -18,8 +25,16 @@
         width: 20%;
     }
 
+    .width25 {
+        width: 25%;
+    }
+
     .width30 {
         width: 30%;
+    }
+
+    .width35 {
+        width: 35%;
     }
 </style>
 
@@ -40,14 +55,17 @@
     <table id="candidatos" class="table table-hover table-striped table-bordered">
         <thead>
             <tr>
-                <th class="width30">Nome</th>
+                <th class="width25">Nome</th>
                 <th class="width30">E-mail</th>
                 <th class="width20 text-center">Data de Nascimento</th>
-                <th class="width20 text-center">Nacionalidade</th>
+                <th class="width15 text-center">Nacionalidade</th>
                 <th class="width10 text-center">Ações</th>
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <td colspan='5'>Nenhum candidato encontrado.</td>
+            </tr>
         </tbody>
     </table>
 </div>

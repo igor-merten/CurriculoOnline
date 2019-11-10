@@ -45,6 +45,7 @@ namespace CurriculoOnline
             services.AddScoped<EstadoService>();
             services.AddScoped<CidadeService>();
             services.AddScoped<CandidatoService>();
+            services.AddScoped<ExperienciaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
